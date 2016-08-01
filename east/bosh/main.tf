@@ -52,7 +52,7 @@ curl -o /tmp/cf.tgz https://s3.amazonaws.com/go-cli/releases/v6.19.0/cf-cli_6.19
 tar -zxvf /tmp/cf.tgz && mv cf /usr/bin/cf && chmod +x /usr/bin/cf
 curl -o /usr/bin/bosh-init https://s3.amazonaws.com/bosh-init-artifacts/bosh-init-0.0.94-linux-amd64
 chmod +x /usr/bin/bosh-init
-gcloud source repos clone global-cloudfoundry
+git clone https://github.com/viglesiasce/global-cloudfoundry-on-gcp.git
 
 ssh-keygen -f ~/.ssh/bosh -P ""
 curl "http://metadata.google.internal/computeMetadata/v1/project/attributes/sshKeys" -H "Metadata-Flavor: Google" > /tmp/sshKeys
@@ -62,7 +62,7 @@ cat ~/.ssh/bosh.pub | tr -d '\n' >> /tmp/sshKeys
 echo >> /tmp/sshKeys
 gcloud compute project-info add-metadata --metadata-from-file sshKeys=/tmp/sshKeys
 
-pushd /global-cloudfoundry/east/bosh
+pushd /global-cloudfoundry-on-gcp/east/bosh
   export HOME=/root/
   bosh-init deploy manifest.yml
   printf "admin\nadmin\n" | bosh target https://10.1.0.6:25555 micro-google
@@ -74,7 +74,7 @@ pushd /global-cloudfoundry/east/bosh
   bosh upload release https://bosh.io/d/github.com/cloudfoundry/cf-release?v=231
 popd
 
-pushd /global-cloudfoundry/east/cloudfoundry
+pushd /global-cloudfoundry-on-gcp/east/cloudfoundry
   sed -i s#{{DIRECTOR_UUID}}#`bosh status --uuid 2>/dev/null`# cloudfoundry.yml
   bosh deployment cloudfoundry.yml
   echo yes | bosh deploy
