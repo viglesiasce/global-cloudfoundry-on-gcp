@@ -16,11 +16,11 @@ us-east regions in order to complete this tutorial**
 1. Change directories to `central/bosh`. Deploy a Bosh inception VM in the us-central1
    region by running:
 
-   ./deploy.sh
+    ./deploy.sh
 
 1. Once that is complete run the same command in the `east/bosh` directory:
 
-   ./deploy.sh
+    ./deploy.sh
 
 ## Tear down
 
@@ -29,8 +29,8 @@ us-east regions in order to complete this tutorial**
 
 2. Next go to the `east/bosh` directory and run the destroy script:
 
-    ./destroy.sh
+     ./destroy.sh
 
 3. Finally do the same in the `central/bosh` directory:
 
-    ./destroy.sh 
+     ./destroy.sh
